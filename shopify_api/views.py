@@ -6,6 +6,7 @@ from rest_framework.response import Response
 from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.decorators import api_view
 from decouple import config
+from django.http import HttpResponse
 # Create your views here.
 
 access_key = config("ACCESS_TOKEN")
@@ -34,7 +35,7 @@ def getAccessScopes(request):
     # for each in r.json()['access_scopes']:
     #     if "read_inventory" in each.values():
     #         print('--------------------')
-    return Response({"status": True}, status=HTTP_200_OK)
+    return HttpResponse('Hello! ' * times)
 
 
 @api_view(["GET"])
@@ -56,4 +57,4 @@ def getAllProducts(request):
     elif r.status_code == 403:
         print("You dont have permission to access this data")
     
-    return Response({"status": r.json()}, status=HTTP_200_OK)
+    return HttpResponse('Hello! ')
