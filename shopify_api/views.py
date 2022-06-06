@@ -7,9 +7,11 @@ from rest_framework.status import HTTP_200_OK, HTTP_400_BAD_REQUEST
 from rest_framework.decorators import api_view
 from decouple import config
 from django.http import HttpResponse
+import os
 # Create your views here.
 
-access_key = config("ACCESS_TOKEN")
+# access_key = config("ACCESS_TOKEN")
+access_key = os.environ.get("ACCESS_KEY")
 @api_view(('GET',))
 def getAccessScopes(request):
     print(config)
