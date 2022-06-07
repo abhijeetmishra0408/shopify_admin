@@ -11,7 +11,7 @@ import os
 # Create your views here.
 
 # access_key = config("ACCESS_TOKEN")
-access_key = os.environ.get("ACCESS_KEY")
+access_key = os.environ.get("ACCESS_TOKEN")
 @api_view(('GET',))
 def getAccessScopes(request):
     print(config)
@@ -47,7 +47,7 @@ def getAllProducts(request):
         "X-Shopify-Access-Token":access_key,
         "content-type": "application/json"
         }
-    print(headers)
+    print(headers, access_key)
     r = requests.get(url, headers=headers)
     if r.status_code == 200:
         with open('new_file.json', 'w') as f:

@@ -85,16 +85,28 @@ WSGI_APPLICATION = 'shopify_admin.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql_psycopg2',
+#         'NAME': os.environ.get("DATABASE_NAME"),
+#         'USER': os.environ.get("DATABASE_USER"),
+#         'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
+#         'HOST': os.environ.get("DATABASE_HOST"),
+#         'PORT':  os.environ.get("DATABASE_PORT"),
+#     }
+# }
+
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': os.environ.get("DATABASE_NAME"),
-        'USER': os.environ.get("DATABASE_USER"),
-        'PASSWORD': os.environ.get("DATABASE_PASSWORD"),
-        'HOST': os.environ.get("DATABASE_HOST"),
-        'PORT':  os.environ.get("DATABASE_PORT"),
+        'NAME': "dbr428f4vjtl76",
+        'USER': "yvccltowzakkkt",
+        'PASSWORD': "e6d8578b4c305b181356a18193bd356c1c9824e4d00ade82a4900410216ac7bf",
+        'HOST': "ec2-3-234-131-8.compute-1.amazonaws.com",
+        'PORT': "5432",
     }
 }
+
 
 # DATABASES = {'default': dj_database_url.config(default=os.environ.get("DATABASE_URL")), 
 #             'ENGINE': 'django.db.backends.postgresql_psycopg2',}
