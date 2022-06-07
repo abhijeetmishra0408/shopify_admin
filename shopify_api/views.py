@@ -1,3 +1,4 @@
+from email.mime import image
 from django.shortcuts import render
 import requests
 import os
@@ -8,6 +9,7 @@ from rest_framework.decorators import api_view
 from decouple import config
 from django.http import HttpResponse
 import os
+from . models import Products, ProductsVariant
 # Create your views here.
 
 # access_key = config("ACCESS_TOKEN")
@@ -48,15 +50,22 @@ def getAllProducts(request):
         "content-type": "application/json"
         }
     print(headers, access_key)
-    r = requests.get(url, headers=headers)
-    if r.status_code == 200:
-        with open('new_file.json', 'w') as f:
-            json.dump(r.json(), f, indent=2)
-            print("New json file is created from data.json file")
-        print(" Status Success")
-    elif r.status_code == 401:
-        print(" Invalid or Unauthrized Access Key")
-    elif r.status_code == 403:
-        print("You dont have permission to access this data")
-    
-    return HttpResponse('Hello! ')
+    # r = requests.get(url, headers=headers)
+    # if r.status_code == 200:
+    #     shopify_products_id = Products.objects.last().order_by("shopify_product_id")
+    #     for product in r.json():
+    #         if product["id"] > shopify_products_id:
+    #             print('product id', product["id"], product["image"]["src"])
+    #             product_details = Products(shopify_products_id = product["id"], name = product["title"], body_html = product["body_html"], status = product["status"], handel = product["handel"], image = product["image"]["src"])
+    #             product_details.save()
+            
+    #     with open('new_file.json', 'w') as f:
+    #         json.dump(r.json(), f, indent=2)
+    #         print("New json file is created from data.json file")
+    #     print(" Status Success")
+    # elif r.status_code == 401:
+    #     print(" Invalid or Unauthrized Access Key")
+    # elif r.status_code == 403:
+    #     print("You dont have permission to access this data")
+    return render(request, 'index.html',{'message_name':"name"})
+    # return Response({"data":r.json()}, status=HTTP_200_OK)
