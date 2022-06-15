@@ -23,7 +23,15 @@ class ProductsVariant(models.Model):
     sku = models.CharField(max_length=255, null=True)
 
 
-# class Orders(models.Model):
-#     shopify_order_id = models.DecimalField(max_digits=16, decimal_places=0)
-#     currency = models.CharField(max_length=25,null=True)
+class Orders(models.Model):
+    shopify_order_id = models.DecimalField(max_digits=16, decimal_places=0)
+    currency = models.CharField(max_length=25,null=True)
+    price = models.DecimalField(max_digits=7, decimal_places=2)
+    status = models.CharField(max_length=20, null=True)
+    product = models.ForeignKey("Products", on_delete=models.CASCADE, null=True)
+    productvariant = models.ForeignKey("ProductsVariant", on_delete=models.CASCADE, null=True)
+    order_date = models.DateTimeField(null=False)
+    
+
+
 
