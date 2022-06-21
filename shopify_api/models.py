@@ -1,9 +1,9 @@
-from itertools import product
-from locale import currency
-from pyexpat import model
-from statistics import mode
+# from itertools import product
+# from locale import currency
+# from pyexpat import model
+# from statistics import mode
 from django.db import models
-from requests import delete
+# from requests import delete
 
 # Create your models here.
 class Products(models.Model):
@@ -31,6 +31,8 @@ class Orders(models.Model):
     product = models.ForeignKey("Products", on_delete=models.CASCADE, null=True)
     productvariant = models.ForeignKey("ProductsVariant", on_delete=models.CASCADE, null=True)
     order_date = models.DateTimeField(null=False)
+
+
     
 
 
