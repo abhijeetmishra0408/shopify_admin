@@ -18,5 +18,6 @@ from django.urls import path,include
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('', include("shopify_api.urls"))
+    path('', include("shopify_api.urls")),
+    path('facebook/',include("facebook_api.urls"))
 ]

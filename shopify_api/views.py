@@ -1,4 +1,6 @@
+from calendar import month
 from email.mime import image
+import imp
 from itertools import count, product
 from select import select
 import stat
@@ -13,6 +15,7 @@ from decouple import config
 from django.http import HttpResponse
 import os
 from . models import Orders, Products, ProductsVariant
+import datetime
 # Create your views here.
 
 # access_key = config("ACCESS_TOKEN")
@@ -87,15 +90,28 @@ from django.db.models.functions import TruncMonth
 from django.db.models import Count
 import json
 from django.forms.models import model_to_dict
+from django.db.models.functions.datetime import ExtractMonth, ExtractYear
+from django.db.models import Sum
+from .serializers import BestProductSerializer
 @api_view(["GET"])
 def getHomePage(request):
-    orders_details = 0
-    orders_month = Orders.objects.annotate(month=TruncMonth('order_date')).values('month')
-    orders_count = orders = Orders.objects.annotate(month=TruncMonth('order_date')).values('month').annotate(c=Count('id')).values('c')
-    all_orders = Orders.objects.all()[0:10]
+    all_orders = Orders.objects.all()
     all_products = Products.objects.all()[0:10]
+    chart_data = Orders.objects.annotate(month=TruncMonth('order_date'),yearmonth=ExtractMonth('order_date')).values('month', 'yearmonth').annotate(counts=Count('id')).values('yearmonth', 'counts').order_by("month")
+    # print(chart_data)
+    product_data = Orders.objects.values('product', 'product__name').annotate(total_price=Sum('price')).order_by("-total_price")[0:10]
+    # print(BestProductSerializer(product_data, many = True).data)
+    products = {"name":[], "total_price":[]}
+    for each in product_data:
+        products["name"].append(each["product__name"])
+        products["total_price"].append(int(each["total_price"]))
+    orders_data = {"labels":[], "data":[]}
+    for each in chart_data:
+        # print(each)
+        orders_data["labels"].append(datetime.date(1900, each['yearmonth'], 1).strftime('%B'))
+        orders_data["data"].append(each['counts'])
     orders = []
-    for each in all_orders:
+    for each in all_orders.filter()[0:10]:
         orders.append(
             {
                 "id":each.id,
@@ -115,7 +131,7 @@ def getHomePage(request):
 
     # return Response({'orders_count':orders_count, 'orders_month':orders_month}, status=HTTP_200_OK)
     
-    return render(request, 'index.html',{'orders':orders, "products":all_products})
+    return render(request, 'index.html',{"chart_data":orders_data,"product_data":products,'orders':orders, "products":all_products, "orders_count":all_orders.count(), "sales":all_orders.aggregate(Sum('price'))})
 
 import random
 import datetime

@@ -27,11 +27,88 @@
     </header>
 
     <main>
-        <h1>Orders</h1>
-        <canvas id="myChart" style="width:100%;max-width:600px"></canvas>
-        <script src="{% static 'js/main.js' %}"></script>
-        <script>
-        // </script>
+        <!-- <div>
+            <table align="left" style="max-width:800px; width:100%">
+                <thead>
+                    <tr>
+                        <th scope="col"><span style="color:#27ae60"><strong><span style="font-size:20px"><span style="background-color:#bdc3c7">Orders: Count&nbsp;</span></span></strong></span></th>
+                        <th scope="col"><span style="color:#27ae60"><strong><span style="font-size:20px"><span style="background-color:#bdc3c7">Total Value:&nbsp;</span></span></strong></span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                </tbody>
+            </table>
+            
+        <br>
+        </div> -->
+        <div>
+            <table style="width:100%;max-width:800px; background-color: aquamarine;">
+                <th style="text-align: left;">
+                    Total Orders: {{orders_count}}
+                </th>
+                <th style="text-align: left;">
+                    Total Sales: {{sales.price__sum}}
+                </th>
+            </table>
+        </div>
+        <div>
+            <h1>Orders</h1>
+        </div>
+        <div>
+            <canvas id="orderChart" style="width:100%;max-width:800px"></canvas>
+            <script>
+                // console.log(chart_data)
+                new Chart("orderChart", {
+                    type: "bar",
+                    data: {
+                        labels: {{ chart_data.labels | safe }},
+                    datasets: [{
+                        fill: false,
+                        lineTension: 1,
+                        backgroundColor: "rgba(0,0,255,1.0)",
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: {{ chart_data.data | safe }}
+                    }]
+                },
+                    options: {
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{ ticks: { min: 0 } }],
+                    }
+                }
+            });
+            </script>
+        </div>
+        <h1>Best Selling Products</h1>
+        <div>
+            <canvas id="productChart" style="width:100%;max-width:800px"></canvas>
+            <script>
+                new Chart("productChart", {
+                    type: "pie",
+                    data: {
+                        labels: {{ product_data.name | safe }},
+                    datasets: [{
+                        fill: false,
+                        lineTension: 1,
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)',
+                            'rgb(255, 205, 40)',
+                            'rgb(255, 103, 86)',
+                            'rgb(155, 205, 86)',
+                            'rgb(225, 205, 86)',
+                            'rgb(255, 205, 16)',
+                            'rgb(255, 105, 86)',
+                            'rgb(255, 25, 86)'
+                        ],
+                        hoverOffset: 4,
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: {{ product_data.total_price | safe }}
+                    }]
+                },
+            });
+            </script>
         </div>
         <h1>Orders this Month</h1>
         <table>
@@ -56,6 +133,7 @@
             </tr>
             {% endfor %}
         </table>
+        <h1>Products</h1>
         <table>
             <th>
                 Product Id
