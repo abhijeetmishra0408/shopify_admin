@@ -16,6 +16,7 @@ from django.http import HttpResponse
 import os
 from . models import Orders, Products, ProductsVariant
 import datetime
+from facebook_api.models import CampaignReach, CampaignValue, Campaign
 # Create your views here.
 
 # access_key = config("ACCESS_TOKEN")
@@ -120,18 +121,15 @@ def getHomePage(request):
                 "product":each.product.name
             }
         )
-
-    # for item in orders_month:
-    #     print('++++++++++++++++++++++++++++',item)
-    #     month = model_to_dict(item)
-    # for item in orders_count:
-    #     counts = model_to_dict(item)
-    # print(month, count)
-
-
-    # return Response({'orders_count':orders_count, 'orders_month':orders_month}, status=HTTP_200_OK)
+    facebook_campaign = {"id":[],"view":[], "click":[]}
+    facebook_campaign_reach = CampaignReach.objects.all()[0:10]
+    for each in facebook_campaign_reach:
+        facebook_campaign["id"].append("ID: " + str(each.cmpaign.campaign_id))
+        facebook_campaign["view"].append(str(each.oneday_view))
+        facebook_campaign["click"].append(str(each.oneday_click))
     
-    return render(request, 'index.html',{"chart_data":orders_data,"product_data":products,'orders':orders, "products":all_products, "orders_count":all_orders.count(), "sales":all_orders.aggregate(Sum('price'))})
+    
+    return render(request, 'index.html',{"chart_data":orders_data,"product_data":products,'orders':orders, "products":all_products, "orders_count":all_orders.count(), "sales":all_orders.aggregate(Sum('price')), "facebook_reach":facebook_campaign})
 
 import random
 import datetime

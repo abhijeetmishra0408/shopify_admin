@@ -65,7 +65,22 @@
                     datasets: [{
                         fill: false,
                         lineTension: 1,
-                        backgroundColor: "rgba(0,0,255,1.0)",
+                        backgroundColor: [
+                            'rgb(255, 99, 132)',
+                            'rgb(54, 162, 235)',
+                            'rgb(255, 205, 86)',
+                            'rgb(255, 205, 40)',
+                            'rgb(255, 103, 86)',
+                            'rgb(155, 205, 86)',
+                            'rgb(225, 205, 86)',
+                            'rgb(255, 205, 16)',
+                            'rgb(255, 105, 86)',
+                            'rgb(255, 25, 86)',
+                            'rgb(255, 25, 86)',
+                            'rgb(255, 65, 40)',
+                            'rgb(255, 215, 40)',
+                            'rgb(215, 205, 40)',
+                        ],
                         borderColor: "rgba(0,0,255,0.1)",
                         data: {{ chart_data.data | safe }}
                     }]
@@ -102,11 +117,72 @@
                             'rgb(255, 105, 86)',
                             'rgb(255, 25, 86)'
                         ],
-                        hoverOffset: 4,
                         borderColor: "rgba(0,0,255,0.1)",
                         data: {{ product_data.total_price | safe }}
                     }]
                 },
+                
+            });
+            </script>
+        </div>
+        <h1>Facebook Campaigns with oneday views</h1>
+        <div>
+            <canvas id="facebookCampaign" style="width:100%;max-width:800px"></canvas>
+            <script>
+                new Chart("facebookCampaign", {
+                    type: "line",
+                    data: {
+                        labels: {{ facebook_reach.id | safe }},
+                    datasets: [{
+                        fill: false,
+                        lineTension: 1,
+                        backgroundColor: [
+                            'rgb(155, 205, 86)',
+                            'rgb(225, 205, 86)',
+                            'rgb(255, 205, 16)',
+                            'rgb(255, 105, 86)',
+                            'rgb(255, 25, 86)',
+                            'rgb(255, 65, 40)',
+                            'rgb(255, 215, 40)',
+                            'rgb(215, 205, 40)',
+                        ],
+                        hoverOffset: 4,
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: {{ facebook_reach.view | safe }}
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{ ticks: { min: 0 } }],
+                    }
+                }
+            });
+            </script>
+        </div>
+        <h1>Facebook Campaigns with oneday clicks</h1>
+        <div>
+            <canvas id="facebookCampaignOneDayClick" style="width:100%;max-width:800px"></canvas>
+            <script>
+                new Chart("facebookCampaignOneDayClick", {
+                    type: "bar",
+                    data: {
+                        labels: {{ facebook_reach.id | safe }},
+                    datasets: [{
+                        fill: false,
+                        lineTension: 0,
+                        backgroundColor: "rgba(75,192,192,0.4)",
+                        hoverOffset: 4,
+                        borderColor: "rgba(0,0,255,0.1)",
+                        data: {{ facebook_reach.click | safe }}
+                    }]
+                },
+                options: {
+                    legend: { display: false },
+                    scales: {
+                        yAxes: [{ ticks: { min: 0 } }],
+                    }
+                }
             });
             </script>
         </div>
