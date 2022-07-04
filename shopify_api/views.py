@@ -112,13 +112,14 @@ def getHomePage(request):
         orders_data["labels"].append(datetime.date(1900, each['yearmonth'], 1).strftime('%B'))
         orders_data["data"].append(each['counts'])
     orders = []
-    for each in all_orders.filter()[0:10]:
+    for each in all_orders.filter().order_by('-order_date')[0:10]:
         orders.append(
             {
                 "id":each.id,
                 "shopify_order_id":each.shopify_order_id,
                 "price":each.price,
-                "product":each.product.name
+                "product":each.product.name,
+                "image":each.product.image
             }
         )
     facebook_campaign = {"id":[],"view":[], "click":[]}

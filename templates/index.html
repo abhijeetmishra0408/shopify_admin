@@ -186,34 +186,34 @@
             });
             </script>
         </div>
-        <h1>Orders this Month</h1>
+        <h1>Recent Orders</h1>
         <table>
             <th>
-                Sr. No
+                Order Id
             </th>
             <th>
-                Order Id
+                Product Name
             </th>
             <th>
                 Price
             </th>
             <th>
-                Product Name
+                Image
             </th>
             {% for order in orders %}
             <tr>
-                <td>{{order.id}}</td>
                 <td>{{order.shopify_order_id}}</td>
-                <td>{{order.price}}</td>
                 <td>{{order.product}}</td>
+                <td>{{order.price}}</td>
+                <td>
+                    <img src="{{order.image}}" alt="" height=100 width=100>
+
+                </td>
             </tr>
             {% endfor %}
         </table>
         <h1>Products</h1>
         <table>
-            <th>
-                Product Id
-            </th>
             <th>
                 Shopify Product Id
             </th>
@@ -228,7 +228,6 @@
             </th>
             {% for product in products %}
             <tr>
-                <td>{{product.id}}</td>
                 <td>{{product.shopify_product_id}}</td>
                 <td>{{product.name}}</td>
                 <td>{{product.status}}</td>
