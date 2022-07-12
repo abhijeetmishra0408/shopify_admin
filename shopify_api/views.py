@@ -126,7 +126,7 @@ def getHomePage(request):
             }
         )
     facebook_campaign = {"id":[],"view":[], "click":[]}
-    facebook_campaign_reach = CampaignReach.objects.all()[0:10]
+    facebook_campaign_reach = CampaignReach.objects.all().order_by('-id')[0:20]
     for each in facebook_campaign_reach:
         facebook_campaign["id"].append("ID: " + str(each.cmpaign.campaign_id))
         facebook_campaign["view"].append(str(each.oneday_view))
