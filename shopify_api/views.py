@@ -17,9 +17,18 @@ import os
 from . models import Orders, Products, ProductsVariant
 import datetime
 from facebook_api.models import CampaignReach, CampaignValue, Campaign
+
+from django.db.models.functions import TruncMonth
+from django.db.models import Count
+import json
+from django.forms.models import model_to_dict
+from django.db.models.functions.datetime import ExtractMonth, ExtractYear
+from django.db.models import Sum
+from .serializers import BestProductSerializer
+# import datetime
+from datetime import date, timedelta
 # Create your views here.
 
-# access_key = config("ACCESS_TOKEN")
 access_key = os.environ.get("ACCESS_TOKEN")
 @api_view(('GET',))
 def getAccessScopes(request):
@@ -87,19 +96,13 @@ def getAllProducts(request):
     # return render(request, 'index.html',{'message_name':"name"})
     # return Response({"data":r.json()}, status=HTTP_200_OK)
 
-from django.db.models.functions import TruncMonth
-from django.db.models import Count
-import json
-from django.forms.models import model_to_dict
-from django.db.models.functions.datetime import ExtractMonth, ExtractYear
-from django.db.models import Sum
-from .serializers import BestProductSerializer
+
 @api_view(["GET"])
 def getHomePage(request):
+    today = date.today() - timedelta(days= 335 + date.today().day)
     all_orders = Orders.objects.all()
     all_products = Products.objects.all()[0:10]
-    chart_data = Orders.objects.annotate(month=TruncMonth('order_date'),yearmonth=ExtractMonth('order_date')).values('month', 'yearmonth').annotate(counts=Count('id')).values('yearmonth', 'counts').order_by("month")
-    # print(chart_data)
+    chart_data = Orders.objects.annotate(month=TruncMonth('order_date'),yearmonth=ExtractMonth('order_date')).filter(order_date__gte = today ).values('month', 'yearmonth').annotate(counts=Count('id')).values('yearmonth', 'counts').order_by("month")
     product_data = Orders.objects.values('product', 'product__name').annotate(total_price=Sum('price')).order_by("-total_price")[0:10]
     # print(BestProductSerializer(product_data, many = True).data)
     products = {"name":[], "total_price":[]}
