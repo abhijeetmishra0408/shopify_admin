@@ -54,7 +54,7 @@ def getAccessScopes(request):
     # for each in r.json()['access_scopes']:
     #     if "read_inventory" in each.values():
     #         print('--------------------')
-    return HttpResponse("Hello! ")
+    return HttpResponse("Hello!")
 
 
 @api_view(["GET"])
