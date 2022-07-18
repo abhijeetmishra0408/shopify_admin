@@ -17,6 +17,7 @@ class CampaignReach(models.Model):
     oneday_view = models.DecimalField(max_digits=8, decimal_places=0)
     oneday_click = models.DecimalField(max_digits=8, decimal_places=0)
 
+
 class CampaignValue(models.Model):
     cmpaign = models.ForeignKey("Campaign", on_delete=models.CASCADE, null=True)
     action_type = models.CharField(max_length=30, null=True)

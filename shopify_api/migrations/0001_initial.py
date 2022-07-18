@@ -8,31 +8,62 @@ class Migration(migrations.Migration):
 
     initial = True
 
-    dependencies = [
-    ]
+    dependencies = []
 
     operations = [
         migrations.CreateModel(
-            name='Products',
+            name="Products",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('shopify_product_id', models.DecimalField(decimal_places=0, max_digits=16, unique=True)),
-                ('name', models.CharField(max_length=255, null=True)),
-                ('body_html', models.TextField(null=True)),
-                ('status', models.CharField(max_length=20, null=True)),
-                ('handle', models.CharField(max_length=255, null=True)),
-                ('image', models.URLField(null=True)),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "shopify_product_id",
+                    models.DecimalField(decimal_places=0, max_digits=16, unique=True),
+                ),
+                ("name", models.CharField(max_length=255, null=True)),
+                ("body_html", models.TextField(null=True)),
+                ("status", models.CharField(max_length=20, null=True)),
+                ("handle", models.CharField(max_length=255, null=True)),
+                ("image", models.URLField(null=True)),
             ],
         ),
         migrations.CreateModel(
-            name='ProductsVariant',
+            name="ProductsVariant",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('shopify_product_id', models.DecimalField(decimal_places=0, max_digits=16)),
-                ('shopify_Variant_id', models.DecimalField(decimal_places=0, max_digits=18, unique=True)),
-                ('price', models.DecimalField(decimal_places=2, max_digits=7)),
-                ('sku', models.CharField(max_length=255, null=True)),
-                ('product', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='shopify_api.products')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "shopify_product_id",
+                    models.DecimalField(decimal_places=0, max_digits=16),
+                ),
+                (
+                    "shopify_Variant_id",
+                    models.DecimalField(decimal_places=0, max_digits=18, unique=True),
+                ),
+                ("price", models.DecimalField(decimal_places=2, max_digits=7)),
+                ("sku", models.CharField(max_length=255, null=True)),
+                (
+                    "product",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="shopify_api.products",
+                    ),
+                ),
             ],
         ),
     ]

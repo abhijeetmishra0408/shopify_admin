@@ -7,21 +7,46 @@ import django.db.models.deletion
 class Migration(migrations.Migration):
 
     dependencies = [
-        ('shopify_api', '0001_initial'),
+        ("shopify_api", "0001_initial"),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='Orders',
+            name="Orders",
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('shopify_order_id', models.DecimalField(decimal_places=0, max_digits=16)),
-                ('currency', models.CharField(max_length=25, null=True)),
-                ('price', models.DecimalField(decimal_places=2, max_digits=7)),
-                ('status', models.CharField(max_length=20, null=True)),
-                ('order_date', models.DateTimeField()),
-                ('product', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='shopify_api.products')),
-                ('productvariant', models.ForeignKey(null=True, on_delete=django.db.models.deletion.CASCADE, to='shopify_api.productsvariant')),
+                (
+                    "id",
+                    models.BigAutoField(
+                        auto_created=True,
+                        primary_key=True,
+                        serialize=False,
+                        verbose_name="ID",
+                    ),
+                ),
+                (
+                    "shopify_order_id",
+                    models.DecimalField(decimal_places=0, max_digits=16),
+                ),
+                ("currency", models.CharField(max_length=25, null=True)),
+                ("price", models.DecimalField(decimal_places=2, max_digits=7)),
+                ("status", models.CharField(max_length=20, null=True)),
+                ("order_date", models.DateTimeField()),
+                (
+                    "product",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="shopify_api.products",
+                    ),
+                ),
+                (
+                    "productvariant",
+                    models.ForeignKey(
+                        null=True,
+                        on_delete=django.db.models.deletion.CASCADE,
+                        to="shopify_api.productsvariant",
+                    ),
+                ),
             ],
         ),
     ]

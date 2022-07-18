@@ -7,5 +7,6 @@ class BestProductSerializer(serializers.Serializer):
         model = Orders
         field = ["total_price", "product_name"]
         product_name = serializers.SerializerMethodField("get_product_name")
-        def get_product_name(self,obj):
+
+        def get_product_name(self, obj):
             return obj.product.name
