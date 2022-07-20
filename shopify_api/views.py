@@ -196,7 +196,6 @@ def insertOrders(request):
     for i in range(200):
         random_product = random.choice(product_variants)
         print("-------------------")
-        print(random_product.id)
         # print(fake.date_time_between(start_date='-1y', end_date='now'))
         status_order = ["CONFIRMED", "PAID", "FAILED"]
         try:
